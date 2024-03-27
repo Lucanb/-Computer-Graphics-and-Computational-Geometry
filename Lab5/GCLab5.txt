@@ -1,0 +1,92 @@
+preinmultire matrix
+
+face cu mat de 4 pt scalare si translatie.
+
+am ecuatii pt ax +b +c = 0
+
+valoriile proprii le folosesc pt a printa pe un anumit ecran
+modelarea obisnuita geome nu permite ca 
+2 drepte paralele sa se intersecteze => extind
+modelul : ax+by+cz +d_1 = 0 (*1/w)
+deci la 2 drepte paralele reprezint solutia cu w 
+-> infinit.
+deci am o coordoata omogena.
+
+La ce e utila valoarea proprie --> cred ca
+pt a reprez pe alt ecran not sure nu fusesem atent.
+
+
+GLMatrixMode: orice vertex e instantaneu inmultit
+cu matricea de transformare(a) -- aici e o mat de proiectie
+lasa x cum a intrat,y cum a intrat si z-ul e 0.
+Mai am matrice de model care transforma coord modelului.
+
+Lucream cu mat de proiectie --> initializam matricea.
+(Load Identity). -- elemt neutru matrice identica.
+
+Limitele spatiului sunt pe x la -10, y 10,z la -10
+z la 30  si -30.
+
+glMatrixMode(GL_MODELVIEW) --> dupa initializare
+e pt transormariile pe care le sufera
+la camera (view) (alta e la transormariile lin.)
+ Toate transormariile in ac matrice ca ele info
+sunt acelasi lucru (una e inversul celeilalte).
+
+camera : persoana o vad ca devine de 2 ori mai mare
+--camera mareste
+--se apropie camera -- distanta.(cu info pur
+geometrice nu putem distinge ca-s perfect
+analoage). Deaia avem 2 metode una pt camera si
+una pt ecran parca. (trasormari camera/model)
+
+Selectez mat. modelview si facem acum roatii mai jos
+la glRotaed - se face o rotatie (nu 2 si e normalizata)
+in jurul axei Ox.Nu putem folosi o val nenula --> avem 2 de zero.
+(x,y,0,0) ca sa invatam ca altfel ar fi descompusa
+si nu vrea.
+
+Conventia de a face rotatii : mergem in vf vectorului si facem rotatia
+in sens trigonometric. (la noi e pe sfera si o ia spre origine).
+
+DispalyT - translatie cu GLTranslate
+DisplayX translatie in jurul Ox
+DisplayZ(in jurul oZ)
+displayS -- face scalare parca
+
+
+1p    -sa intelegem.
+	-nu avem rotatii descomp (in urul altora)
+	-in jurul diag principale --> ca sa fac asta nu ar trbui cu coef din vector?
+	-transformariile geome nu sunt comutative
+	-nici asociative zic
+	-la aceasta tema doar in jurul axelor
+	-coteaza ordinea lor deci.
+
+avem de facut la tema : 
+	-un triunghi cu coordonate aleatorii(se insista pe asta)
+	-lucram general (clar ca sunt aleatorii) pct 2
+	-la pct 3 fixate
+	-la fiecare pas afiseaza imaginea --> ajuta pe ambele parti
+	-bonus de facut animatie
+	-revenim - luam triungi arbitrar si trbuie sa aducem un trunghi arbitrar si sa 
+	il avem. facem o translatie din - pe 0 (-vy,vy,vz) si cred o pe x deci ne duce cu un vf pe origine
+	-ducem proiectia (vf 2) --> pe planul xoz si luam unghiul dintre segmentul din origine
+ 	la proiectia pe planul respectiv si oz(ca acesta e ) mai ducem iar proiectia si avem unghiul asta
+	- putem aduce triunghiul pe aceasta muchie pe Oz
+	-- o translatie 3 rotatiee si o  multime de proiectii(algo in suportul de curs)
+	-- sa incercam pt aceasta problema cu muchia fara GL_ROTATE/GL_TRANSLATE ci de mana
+	-- o sa avem niste coord de la inceput si ca sa le ducem in GL_ROTATE ar fi niste calcule
+	matematice ft lungi --> facem greseli. Deci e mai bn de mana sa ne facem matematica.
+
+	--urmatoare problema : luam  un cub
+	--trebuie sa il rotim in jucrul primei diag a spatiului care e si diag principala
+	--GL_ROTATE nu am voie --> e simplu,ma uit 1_1 si ma duc in 0_0.
+	--diag principala o duc ca proiectie la Ox --> fac rotaia inversa cu un nr de grade.
+	--coordonatele se schimba cu fix coord lui Oz.
+	(suport de curs)
+	
+	--ne este dat in arhiva un exe --> program py(pe linux mai greu ca e dll)
+	--intai -45 grade julrul lui oy dupa ox cu cat se cere si dupa il mut
+	--si facem verif (il mutam inapoi).
+	--unghi vizual e proiectat.
