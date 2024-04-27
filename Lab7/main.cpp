@@ -2,13 +2,35 @@
 #include <stdio.h>
 #include <math.h>
 
-#include <GL/glut.h>
+#include <bits/stdc++.h>
 
+
+#ifdef __APPLE__
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 // the size of the window measured in pixels
 #define dim 300
 
 unsigned char prevKey;
 GLint k;
+
+//https://en.wikipedia.org/wiki/Oblique_projection
+GLfloat cabinet[] = {
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			cos(M_PI/6)/2,sin(M_PI/6)/2,0,0,
+			0, 0, 0, 1
+};
+
+GLfloat cavalier[] = {
+			1, 0, 0, 0,
+			0, 1, 0, 0,
+			cos(M_PI/4),sin(M_PI/4),0,0,
+			0, 0, 0, 1
+};
+
 // the size of the cube
 GLdouble lat = 5;
 
@@ -103,6 +125,56 @@ void Display()
       DisplayObiect();
     glPopMatrix();
     break;
+  case '1':
+    // orthographic parallel projection: front-elevation projection
+    proiectieParalela('1');
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    glPushMatrix();
+      glTranslated(0, 0, -lat);
+      glTranslated(lat/2.0, lat/2.0, lat/2.0);
+      glRotated(90, 1, 0, 0);
+      glTranslated(-lat/2.0, -lat/2.0, -lat/2.0);
+      DisplayAxe();
+      DisplayObiect();
+    glPopMatrix();
+    break;
+  case '2':
+    glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		glFrustum(-6, 6, -6, 6, 6, 25);
+    glTranslated(-12,-12,-20);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glMatrixMode(GL_MODELVIEW);
+		glLoadIdentity();
+		DisplayAxe();
+		DisplayObiect();
+    break;
+  case '3':
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glLoadMatrixf(cabinet);
+    glOrtho(-5, 10, -5, 10, -10, 10);
+    //glOrtho(-10,10,-10,10,-10,20);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    DisplayObiect();
+    DisplayAxe();
+    break;
+  case '4':
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    glLoadMatrixf(cavalier);
+    //glOrtho(-5, 12, -5, 12, -15, 20);
+    glOrtho(-10,10,-10,10,-10,20);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    DisplayObiect();
+    DisplayAxe();
+    break;
   default:
     break;
   }
@@ -132,8 +204,7 @@ int main(int argc, char** argv) {
 
    glutInitWindowPosition(100, 100);
 
-   glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE | GLUT_DEPTH | GLUT_MULTISAMPLE);
-   glEnable(GL_MULTISAMPLE);
+   glutInitDisplayMode (GL_COLOR_BUFFER_BIT | GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
    glutCreateWindow (argv[0]);
 
@@ -161,6 +232,7 @@ void proiectieParalela(unsigned char c) {
   case 'Z':
     glOrtho(-10, 10, -10, 10, -20, 20);
     break;
+  case '1':
   case 'q':
   case 'w':
     glOrtho(-1, 6, -1, 6, -1, 20);
