@@ -1,7 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
 #include <bits/stdc++.h>
 
 
@@ -10,6 +9,8 @@
 #else
 #include <GL/glut.h>
 #endif
+
+
 // the size of the window measured in pixels
 #define dim 300
 
@@ -144,10 +145,11 @@ void Display()
     glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glFrustum(-6, 6, -6, 6, 6, 25);
-    glTranslated(-12,-12,-20);
+    //glTranslated(-12,-12,-20);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
+    glTranslated(-12,-12,-20);
 		DisplayAxe();
 		DisplayObiect();
     break;
